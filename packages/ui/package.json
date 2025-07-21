@@ -22,8 +22,11 @@
     "@storybook/addon-vitest": "^9.0.17",
     "@storybook/vue3-vite": "^9.0.17",
     "@tailwindcss/vite": "^4.1.11",
+    "@types/node": "^24.0.15",
     "@vitejs/plugin-vue": "^6.0.0",
     "@vitest/browser": "^3.2.4",
+    "@vitest/coverage-v8": "3.2.4",
+    "playwright": "^1.54.1",
     "storybook": "^9.0.17",
     "tailwindcss": "^4.1.11",
     "typescript": "^5.8.3",
@@ -31,8 +34,6 @@
     "vitest": "^3.2.4",
     "vitest-browser-vue": "^1.0.0",
     "vue": "^3.5.17",
-    "vue-tsc": "^3.0.3",
-    "playwright": "^1.54.1",
-    "@vitest/coverage-v8": "3.2.4"
+    "vue-tsc": "^3.0.3"
   }
 }
