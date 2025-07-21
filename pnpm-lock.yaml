@@ -12,7 +12,16 @@ importers:
         specifier: ^10.13.1
         version: 10.13.1
 
+  packages/ui:
+    dependencies:
+      dayjs:
+        specifier: ^1.11.13
+        version: 1.11.13
+
 packages:
+
+  dayjs@1.11.13:
+    resolution: {integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==}
 
   pnpm@10.13.1:
     resolution: {integrity: sha512-N+vxpcejDV+r4MXfRO6NpMllygxa89urKMOhaBtwolYhjQXIHJwNz3Z+9rhVHrW5YAQrntQwDFkkIzY3fgHPrQ==}
@@ -20,5 +29,7 @@ packages:
     hasBin: true
 
 snapshots:
+
+  dayjs@1.11.13: {}
 
   pnpm@10.13.1: {}
