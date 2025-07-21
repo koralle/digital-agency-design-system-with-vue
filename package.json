@@ -10,6 +10,7 @@
   "devDependencies": {
     "@prettier/plugin-oxc": "^0.0.4",
     "eslint": "^9.31.0",
+    "eslint-plugin-vue": "^10.3.0",
     "jiti": "^2.4.2",
     "pnpm": "^10.13.1",
     "prettier": "^3.6.2",
