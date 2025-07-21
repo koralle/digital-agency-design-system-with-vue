@@ -10,6 +10,7 @@
   "devDependencies": {
     "@prettier/plugin-oxc": "^0.0.4",
     "pnpm": "^10.13.1",
-    "prettier": "^3.6.2"
+    "prettier": "^3.6.2",
+    "typescript-eslint": "^8.37.0"
   }
 }
