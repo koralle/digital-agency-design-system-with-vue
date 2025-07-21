@@ -1,0 +1,16 @@
+{
+  "extends": "@tsconfig/strictest/tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+
+    "target": "es2022",
+    "module": "preserve",
+    "lib": ["dom", "dom.iterable", "es2024"],
+    "moduleResolution": "bundler",
+
+    "noEmit": true,
+
+    "types": ["@vitest/browser/providers/playwright", "vitest/globals"]
+  },
+  "include": ["src"]
+}
