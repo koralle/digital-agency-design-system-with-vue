@@ -11,6 +11,9 @@ importers:
       '@prettier/plugin-oxc':
         specifier: ^0.0.4
         version: 0.0.4
+      jiti:
+        specifier: ^2.4.2
+        version: 2.4.2
       pnpm:
         specifier: ^10.13.1
         version: 10.13.1
