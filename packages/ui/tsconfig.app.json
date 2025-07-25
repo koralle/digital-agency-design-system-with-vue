@@ -8,6 +8,22 @@
     "lib": ["dom", "dom.iterable", "es2024"],
     "moduleResolution": "bundler",
 
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
+
+    "moduleDetection": "force",
+
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+
+    "noImplicitThis": true,
+
+    "verbatimModuleSyntax": true,
+
+     "useDefineForClassFields": true,
+
+     "forceConsistentCasingInFileNames": true,
+
     "noEmit": true,
 
     "types": ["@vitest/browser/providers/playwright", "vitest/globals"]
