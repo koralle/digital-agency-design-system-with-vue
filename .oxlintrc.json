@@ -1,0 +1,15 @@
+{
+  "plugins": ["import", "typescript", "promise", "oxc", "unicorn", "vitest"],
+  "env": {
+    "browser": true
+  },
+  "categories": {
+    "correctness": "error",
+    "perf": "error",
+    "nursery": "warn",
+    "pedantic": "error",
+    "restriction": "error",
+    "style": "error",
+    "suspicious": "error"
+  }
+}
