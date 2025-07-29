@@ -20,9 +20,9 @@
 
     "verbatimModuleSyntax": true,
 
-     "useDefineForClassFields": true,
+    "useDefineForClassFields": true,
 
-     "forceConsistentCasingInFileNames": true,
+    "forceConsistentCasingInFileNames": true,
 
     "noEmit": true,
 
