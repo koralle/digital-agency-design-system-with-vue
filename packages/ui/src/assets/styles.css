@@ -1,0 +1,40 @@
+@layer theme, base, components, utilities;
+
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utitiles);
+@import './preflight.css' layer(base);
+@import './design-token.css' layer(theme);
+
+@layer base {
+  :where(:root) {
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+
+  :where(body) {
+    position: relative;
+    display: block flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 960px;
+    height: max-content;
+    min-height: 100svb;
+    scrollbar-gutter: stable;
+    font-variant-east-asian: proportional-width;
+    word-break: normal;
+    overflow-wrap: anywhere;
+    line-break: strict;
+    white-space: pre-wrap;
+
+    @supports (text-wrap: pretty) {
+      text-wrap: pretty;
+    }
+
+    @supports (white-space-collapse: preserve) {
+      white-space-collapse: preserve;
+    }
+
+    @supports (word-break: auto-phrase) {
+      word-break: auto-phrase;
+    }
+  }
+}

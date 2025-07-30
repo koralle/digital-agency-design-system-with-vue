@@ -7,9 +7,12 @@ const config: StorybookConfig = {
     name: '@storybook/vue3-vite',
     options: {
       builder: {
-        viteConfigPath: 'vite.config.ts'
+        viteConfigPath: 'vite.config.mts'
       },
-      docgen: 'vue-component-meta'
+      docgen: {
+        plugin: 'vue-component-meta',
+        tsconfig: 'tsconfig.app.json'
+      }
     }
   }
 };
