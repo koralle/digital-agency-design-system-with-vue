@@ -227,4 +227,6 @@
   --color-semantic-warning-yellow-2: var(--color-primitive-yellow-900);
   --color-semantic-warning-orange-1: var(--color-primitive-orange-600);
   --color-semantic-warning-orange-2: var(--color-primitive-orange-800);
+
+  --spacing: 4px;
 }
