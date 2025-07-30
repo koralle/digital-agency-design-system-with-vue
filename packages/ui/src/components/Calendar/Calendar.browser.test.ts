@@ -1,11 +1,11 @@
-import { composeStories } from '@storybook/vue3-vite';
 import * as CalendarStories from './Calendar.stories';
-import { render } from '../../test/render';
+import { composeStories } from '@storybook/vue3-vite';
 import { page } from '@vitest/browser/context';
+import { render } from '../../test/render';
 
 const composedStories = composeStories(CalendarStories);
 
-describe('Calendar', () => {
+describe('calendar', () => {
   const { Default } = composedStories;
 
   test('コンポーネントが正しくレンダリングされていること', async () => {

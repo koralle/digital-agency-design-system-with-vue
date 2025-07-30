@@ -2,7 +2,17 @@
   "name": "digital-agency-design-system-with-vue",
   "version": "1.0.0",
   "description": "",
-  "scripts": {},
+  "scripts": {
+    "format:check": "prettier . -c",
+    "format:fix": "prettier . -w",
+    "format": "pnpm run format:fix",
+    "lint:oxlint:check": "oxlint .",
+    "lint:oxlint:fix": "oxlint . --fix",
+    "lint:oxlint": "pnpm run lint:oxlint",
+    "lint:eslint:check": "eslint . --config eslint.config.ts",
+    "lint:eslint:fix": "eslint . --config eslint.config.ts --fix",
+    "lint:eslint": "pnpm run lint:eslint"
+  },
   "keywords": [],
   "author": "",
   "license": "MIT",

@@ -1,5 +1,18 @@
 {
-  "plugins": ["import", "typescript", "promise", "oxc", "unicorn", "vitest"],
+  "plugins": [
+    "import",
+    "typescript",
+    "promise",
+    "oxc",
+    "unicorn",
+    "vitest"
+  ],
+  "ignorePatterns": [
+    "*.d.ts",
+    "**/coverage",
+    "**/dist",
+    "**/*.vue"
+  ],
   "env": {
     "browser": true
   },
@@ -11,5 +24,42 @@
     "restriction": "error",
     "style": "error",
     "suspicious": "error"
-  }
+  },
+  "rules": {
+    "import/prefer-default-export": "off",
+    "sort-keys": "off"
+  },
+  "overrides": [
+    {
+      "files": [
+        "eslint.config.ts",
+        "packages/ui/src/components/**/*.stories.ts",
+        "packages/ui/vite.config.ts",
+        "packages/ui/vitest.config.ts",
+        "packages/ui/src/storybook/*.ts"
+      ],
+      "rules": {
+        "import/no-default-export": "off"
+      }
+    },
+    {
+      "files": [
+        "packages/ui/src/components/**/*.stories.ts"
+      ],
+      "rules": {
+        "import/exports-last": "off",
+        "unicorn/filename-case": "off"
+      }
+    },
+    {
+      "files": [
+        "**/*.browser.test.ts"
+      ],
+      "rules": {
+        "oxc/no-async-await": "off",
+        "typescript/explicit-function-return-type": "off",
+        "unicorn/filename-case": "off"
+      }
+    }
+  ]
 }
