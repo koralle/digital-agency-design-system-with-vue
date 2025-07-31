@@ -48,17 +48,17 @@ const handleKeydown = (event: KeyboardEvent) => {
 };
 
 const buttonRefKey = Symbol().toString();
-const buttonRef = useTemplateRef<HTMLButtonElement | null>(buttonRefKey);
+// const buttonRef = useTemplateRef<HTMLButtonElement | null>(buttonRefKey);
 
-watchEffect(() => {
-  if (buttonRef.value === null) {
-    return;
-  }
-
-  if (isSameDate(date, focusedDate.value)) {
-    buttonRef.value.focus();
-  }
-});
+// watchEffect(() => {
+//   if (buttonRef.value === null) {
+//     return;
+//   }
+//
+//   if (isSameDate(date, focusedDate.value)) {
+//     buttonRef.value.focus();
+//   }
+// });
 </script>
 
 <template>
