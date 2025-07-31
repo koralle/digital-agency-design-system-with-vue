@@ -1,4 +1,8 @@
+<script lang="ts"></script>
 <script setup lang="ts">
+import { useCalendarContext } from './calendar-context';
+
+useCalendarContext();
 </script>
 
 <template>
@@ -8,6 +12,8 @@
         :class="[
           'w-full',
           'appearance-none',
+          'inline-flex',
+          'items-center',
           'border border-neutral-solid-gray-600',
           'rounded-[8px]',
           '!h-[calc(44/16*1rem)]',

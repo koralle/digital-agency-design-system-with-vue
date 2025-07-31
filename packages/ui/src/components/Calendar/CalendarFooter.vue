@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useCalendarContext } from './calendar-context';
+
+useCalendarContext();
 </script>
 
 <template>
