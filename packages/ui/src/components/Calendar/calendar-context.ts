@@ -1,14 +1,9 @@
 import { createInjectionState } from '@vueuse/core';
 import type { CalendarContext } from './types';
 
-const [useProvideCalendarContext, _useCalendarContext] = createInjectionState(
-  (context: CalendarContext) => {
-    return context;
-  },
-  {
-    injectionKey: Symbol('CalendarContext')
-  }
-);
+const [useProvideCalendarContext, _useCalendarContext] = createInjectionState((context: CalendarContext) => context, {
+  injectionKey: Symbol('CalendarContext')
+});
 
 const useCalendarContext = () => {
   const context = _useCalendarContext();

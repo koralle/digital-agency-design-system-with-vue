@@ -1,7 +1,20 @@
 <script setup lang="ts">
 import { useCalendarContext } from './calendar-context';
+import { getTodayDate } from './calendar-utils';
 
-useCalendarContext();
+const { calendarDate, controledDate, focusedDate } = useCalendarContext();
+
+const handleClickDeleteCalendarDateButton = () => {
+  controledDate.value = null;
+};
+
+const handleClickTodayButtonButton = () => {
+  const today = getTodayDate();
+
+  controledDate.value = today;
+  calendarDate.value = today;
+  focusedDate.value = today;
+};
 </script>
 
 <template>
@@ -30,6 +43,7 @@ useCalendarContext();
         'motion-reduce:transition-none',
         'after:absolute after:inset-x-0 after:-inset-y-full after:m-auto after:h-[44px]'
       ]"
+      @click="handleClickDeleteCalendarDateButton"
     >
       削除
     </button>
@@ -62,6 +76,7 @@ useCalendarContext();
         'motion-reduce:transition-none',
         'after:absolute after:inset-x-0 after:-inset-y-full after:m-auto after:h-[44px]'
       ]"
+      @click="handleClickTodayButtonButton"
     >
       今日
     </button>

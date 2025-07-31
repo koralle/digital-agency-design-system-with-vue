@@ -1,8 +1,55 @@
 <script lang="ts"></script>
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useCalendarContext } from './calendar-context';
+import { addMonth, buildDate, subtractMonth, updateMonth, updateYear } from './calendar-utils';
+import { yearIntlFormatter } from './intl';
 
-useCalendarContext();
+const { calendarDate, focusedDate, minYear, maxYear } = useCalendarContext();
+
+const yearOptions = computed(() =>
+  Array.from({ length: maxYear - (minYear - 1) }, (_, index) => minYear + index).map((year) => buildDate(year))
+);
+
+const onChangeYearSelect = (event: Event) => {
+  const target = event.target as HTMLSelectElement;
+  const selectedYear = Number(target.value);
+
+  calendarDate.value = updateYear(calendarDate.value, selectedYear);
+  focusedDate.value = updateYear(focusedDate.value, selectedYear);
+};
+
+/**
+ * @todo 取りうる年の最小値の1月にクリックしたときに、取りうる年の最大値の12月に移動する処理
+ */
+const onClickPrevMonthButton = () => {
+  if (calendarDate.value.getFullYear() === minYear && calendarDate.value.getMonth() === 1) {
+    calendarDate.value = updateYear(calendarDate.value, maxYear);
+    focusedDate.value = updateYear(focusedDate.value, maxYear);
+
+    calendarDate.value = updateMonth(calendarDate.value, 12);
+    focusedDate.value = updateMonth(focusedDate.value, 12);
+  } else {
+    calendarDate.value = subtractMonth(calendarDate.value, 1);
+    focusedDate.value = subtractMonth(focusedDate.value, 1);
+  }
+};
+
+/**
+ * @todo 取りうる年の最大値の12月にクリックしたときに、取りうる年の最小値の1月に移動する処理
+ */
+const onClickNextMonthButton = () => {
+  if (calendarDate.value.getFullYear() === maxYear && calendarDate.value.getMonth() === 12) {
+    calendarDate.value = updateYear(calendarDate.value, minYear);
+    focusedDate.value = updateYear(focusedDate.value, minYear);
+
+    calendarDate.value = updateMonth(calendarDate.value, 1);
+    focusedDate.value = updateMonth(focusedDate.value, 1);
+  } else {
+    calendarDate.value = addMonth(calendarDate.value, 1);
+    focusedDate.value = addMonth(focusedDate.value, 1);
+  }
+};
 </script>
 
 <template>
@@ -30,7 +77,16 @@ useCalendarContext();
           'motion-reduce:transition-none'
         ]"
         aria-label="年"
-      ></select>
+        @change="onChangeYearSelect"
+      >
+        <option
+          v-for="yearOption of yearOptions"
+          :value="yearOption.getFullYear()"
+          :selected="calendarDate.getFullYear() === yearOption.getFullYear()"
+        >
+          {{ yearOption.getFullYear() }}年 ({{ yearIntlFormatter.format(yearOption) }})
+        </option>
+      </select>
       <svg
         aria-hidden="true"
         class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-solid-gray-900 forced-colors:text-[CanvasText]"
@@ -65,6 +121,7 @@ useCalendarContext();
           'not-motion-reduce:transition not-motion-reduce:duration-300',
           'motion-reduce:transition-none'
         ]"
+        @click="onClickPrevMonthButton"
       >
         <svg
           class="mx-auto"
@@ -89,7 +146,7 @@ useCalendarContext();
           'w-[calc(56/16*1rem)]'
         ]"
       >
-        9月
+        {{ calendarDate?.getMonth() + 1 }} 月
       </p>
       <button
         :class="[
@@ -110,6 +167,7 @@ useCalendarContext();
           'not-motion-reduce:transition not-motion-reduce:duration-300',
           'motion-reduce:transition-none'
         ]"
+        @click="onClickNextMonthButton"
       >
         <svg
           class="mx-auto"

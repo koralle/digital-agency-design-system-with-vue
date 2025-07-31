@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { useCalendarContext } from './calendar-context';
-import { getWeekdays } from './calendar-utils';
+import { getMonthDays, getWeekdays } from './calendar-utils';
+import CalendarCell from './CalendarCell.vue';
 
-useCalendarContext();
+const { calendarDate } = useCalendarContext();
 </script>
 
 <template>
@@ -26,6 +27,16 @@ useCalendarContext();
         </th>
       </tr>
     </thead>
-    <tbody></tbody>
+    <tbody>
+      <tr
+        v-for="(cells, rowIndex) of getMonthDays(calendarDate)"
+        :class="['grid grid-cols-[repeat(7,calc(48/16*1rem))]', '!h-[calc(48/16*1rem)]']"
+      >
+        <CalendarCell
+          v-for="(cell, colIndex) of cells"
+          :date="cell"
+        />
+      </tr>
+    </tbody>
   </table>
 </template>

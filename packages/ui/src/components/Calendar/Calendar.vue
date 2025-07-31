@@ -7,11 +7,13 @@ import { useProvideCalendarContext } from './calendar-context';
 import { useCalendar } from './use-calendar';
 import CalendarGrid from './CalendarGrid.vue';
 
-const {} = defineProps<CalendarProps>();
+const { minYear = 1901, maxYear = 2050 } = defineProps<CalendarProps>();
 
-const context = useCalendar();
+const calendarDateModel = defineModel<Date | null | undefined>({ default: undefined });
 
-useProvideCalendarContext(context);
+const { ...rest } = useCalendar({ controledDate: calendarDateModel, minYear, maxYear });
+
+useProvideCalendarContext({ ...rest });
 </script>
 
 <template>
