@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { computed, nextTick, ref } from 'vue';
 import { useCalendarContext } from './calendar-context';
-import { getMonthDays, getWeekdays, isSameMonth } from './calendar-utils';
+import { getMonthDays, getWeekdays } from './calendar-utils';
 import CalendarCell from './CalendarCell.vue';
+import { dateIntlFormatter } from './intl';
 
-const { calendarDate, focusedDate } = useCalendarContext();
+const { calendarDate } = useCalendarContext();
 
 const days = computed(() => getMonthDays(calendarDate.value));
 
-const buildRefKey = (date: Date): `${number}-${number}-${number}` =>
-  `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+const buildRefKey = (date: Date) => dateIntlFormatter.format(date);
 
 // CalendarCellのインスタンスを格納するMap
 const cellRefs = ref(new Map<string, Element | InstanceType<typeof CalendarCell> | null>());
