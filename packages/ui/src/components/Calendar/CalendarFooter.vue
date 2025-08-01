@@ -2,16 +2,16 @@
 import { useCalendarContext } from './calendar-context';
 import { getTodayDate } from './calendar-utils';
 
-const { calendarDate, controledDate, focusedDate } = useCalendarContext();
+const { calendarDate, controlledDate, focusedDate } = useCalendarContext();
 
 const handleClickDeleteCalendarDateButton = () => {
-  controledDate.value = null;
+  controlledDate.value = null;
 };
 
 const handleClickTodayButtonButton = () => {
   const today = getTodayDate();
 
-  controledDate.value = today;
+  controlledDate.value = today;
   calendarDate.value = today;
   focusedDate.value = today;
 };

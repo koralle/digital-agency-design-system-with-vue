@@ -11,7 +11,7 @@ const { minYear = 1901, maxYear = 2050 } = defineProps<CalendarProps>();
 
 const calendarDateModel = defineModel<Date | null | undefined>({ default: undefined });
 
-const { ...rest } = useCalendar({ controledDate: calendarDateModel, minYear, maxYear });
+const { ...rest } = useCalendar({ controlledDate: calendarDateModel, minYear, maxYear });
 
 useProvideCalendarContext({ ...rest });
 </script>

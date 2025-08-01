@@ -23,7 +23,7 @@ const onChangeYearSelect = (event: Event) => {
  * @todo 取りうる年の最小値の1月にクリックしたときに、取りうる年の最大値の12月に移動する処理
  */
 const onClickPrevMonthButton = () => {
-  if (calendarDate.value.getFullYear() === minYear && calendarDate.value.getMonth() === 1) {
+  if (calendarDate.value.getFullYear() === minYear && calendarDate.value.getMonth() === 0) {
     calendarDate.value = updateYear(calendarDate.value, maxYear);
     focusedDate.value = updateYear(focusedDate.value, maxYear);
 
@@ -39,7 +39,7 @@ const onClickPrevMonthButton = () => {
  * @todo 取りうる年の最大値の12月にクリックしたときに、取りうる年の最小値の1月に移動する処理
  */
 const onClickNextMonthButton = () => {
-  if (calendarDate.value.getFullYear() === maxYear && calendarDate.value.getMonth() === 12) {
+  if (calendarDate.value.getFullYear() === maxYear && calendarDate.value.getMonth() === 11) {
     calendarDate.value = updateYear(calendarDate.value, minYear);
     focusedDate.value = updateYear(focusedDate.value, minYear);
 

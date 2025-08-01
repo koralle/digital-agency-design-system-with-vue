@@ -29,22 +29,26 @@ export const addDay = (date: Date, diff: number) => dayjs(date).add(diff, 'day')
 
 export const subtractDay = (date: Date, diff: number) => dayjs(date).subtract(diff, 'day').toDate();
 
-export const getFirstOfWeek = (date: Date): Date => {
+export const getFirstOfWeek = (date: Date, firstDayOfWeek: 'monday' | 'sunday' = 'sunday'): Date => {
   const value = new Date(date);
-  const day = value.getDay() || 7;
+  const day = value.getDay();
+  const sunday = firstDayOfWeek === 'sunday';
 
-  if (day !== 0) value.setHours(-24 * day);
+  const diff = sunday ? day : day === 0 ? 6 : day - 1;
+
+  value.setDate(value.getDate() - diff);
 
   return value;
 };
 
-export const getLastOfWeek = (date: Date): Date => {
+export const getLastOfWeek = (date: Date, firstDayOfWeek: 'monday' | 'sunday' = 'sunday'): Date => {
   const value = new Date(date);
   const day = value.getDay();
+  const sunday = firstDayOfWeek === 'sunday';
 
-  const clampToLastDay = 7 - (day + 1);
+  const clampToLastDay = 7 - (sunday ? day + 1 : day);
 
-  if (day !== 6) value.setDate(value.getDate() + clampToLastDay);
+  if ((sunday && day !== 6) || day !== 0) value.setDate(value.getDate() + clampToLastDay);
 
   return value;
 };
@@ -70,7 +74,7 @@ export const getMonthDays = (date: Date): Date[][] => {
   const firstOfMonth = new Date(date.getFullYear(), currentMonth, 1);
   const lastOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
   const endDate = getLastOfWeek(lastOfMonth);
-  const firstDate = getFirstOfWeek(firstOfMonth);
+  let firstDate = getFirstOfWeek(firstOfMonth);
 
   const weeks: Date[][] = [];
 
@@ -78,9 +82,9 @@ export const getMonthDays = (date: Date): Date[][] => {
     const days: Date[] = [];
 
     for (let i = 0; i < 7; i += 1) {
-      days.push(new Date(firstDate));
+      days.push(dayjs(firstDate).toDate());
 
-      firstDate.setDate(firstDate.getDate() + 1);
+      firstDate = dayjs(firstDate).add(1, 'day').toDate();
     }
 
     weeks.push(days);

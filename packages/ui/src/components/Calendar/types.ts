@@ -7,7 +7,7 @@ export interface CalendarProps {
 
 export interface CalendarContext {
   calendarDate: Ref<Date>;
-  controledDate: Ref<Date | null | undefined>;
+    controlledDate: Ref<Date | null | undefined>;
   focusedDate: Ref<Date>;
   minYear: number;
   maxYear: number;

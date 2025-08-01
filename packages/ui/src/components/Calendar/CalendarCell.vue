@@ -5,20 +5,20 @@ interface CalendarCellProps {
 </script>
 
 <script setup lang="ts">
-import { computed, useTemplateRef, watchEffect } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 import { useCalendarContext } from './calendar-context';
 import { addDay, addWeek, isSameDate, isSameMonth, subtractDay, subtractWeek } from './calendar-utils';
 const { date } = defineProps<CalendarCellProps>();
 
-const { calendarDate, controledDate, focusedDate } = useCalendarContext();
+const { calendarDate, controlledDate, focusedDate } = useCalendarContext();
 
 const isVisible = computed(() => isSameMonth(date, calendarDate.value));
-const isSelected = computed(() => isSameDate(date, controledDate.value));
+const isSelected = computed(() => isSameDate(date, controlledDate.value));
 const isFocused = computed(() => isSameDate(date, focusedDate.value));
 
 const handleClick = () => {
   calendarDate.value = date;
-  controledDate.value = date;
+  controlledDate.value = date;
   focusedDate.value = date;
 };
 
@@ -47,18 +47,17 @@ const handleKeydown = (event: KeyboardEvent) => {
   }
 };
 
-const buttonRefKey = Symbol().toString();
-// const buttonRef = useTemplateRef<HTMLButtonElement | null>(buttonRefKey);
+const buttonRef = ref<HTMLButtonElement | null>(null);
 
-// watchEffect(() => {
-//   if (buttonRef.value === null) {
-//     return;
-//   }
-//
-//   if (isSameDate(date, focusedDate.value)) {
-//     buttonRef.value.focus();
-//   }
-// });
+watchEffect(() => {
+  if (buttonRef.value === null) {
+    return;
+  }
+
+  if (isSameDate(date, focusedDate.value)) {
+    buttonRef.value.focus();
+  }
+});
 </script>
 
 <template>
@@ -67,7 +66,7 @@ const buttonRefKey = Symbol().toString();
     :class="['grid place-items-center', 'w-[calc(48/16*1rem)] h-[calc(48/16*1rem)]']"
   >
     <button
-      :ref="buttonRefKey"
+      ref="buttonRef"
       v-if="isVisible"
       :class="[
         'grid place-items-center',
