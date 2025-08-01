@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitest/config';
 import vue from '@vitejs/plugin-vue';
 
-export default defineConfig({
+const vitestConfig = defineConfig({
   plugins: [vue()],
   test: {
     projects: [
@@ -40,3 +40,5 @@ export default defineConfig({
     ]
   }
 });
+
+export default vitestConfig;

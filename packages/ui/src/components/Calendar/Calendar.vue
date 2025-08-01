@@ -1,4 +1,7 @@
 <script setup lang="ts">
+defineOptions({
+  name: 'CalendarWidget'
+});
 import type { CalendarProps } from './types';
 import CalendarHeader from './CalendarHeader.vue';
 

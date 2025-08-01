@@ -1,14 +1,16 @@
 import type { Ref } from 'vue';
 
-export interface CalendarProps {
+interface CalendarProps {
   minYear?: number;
   maxYear?: number;
 }
 
-export interface CalendarContext {
+interface CalendarContext {
   calendarDate: Ref<Date>;
     controlledDate: Ref<Date | null | undefined>;
   focusedDate: Ref<Date>;
   minYear: number;
   maxYear: number;
 }
+
+export type { CalendarProps, CalendarContext };

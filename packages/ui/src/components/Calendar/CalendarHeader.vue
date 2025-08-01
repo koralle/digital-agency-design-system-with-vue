@@ -22,16 +22,21 @@ const onChangeYearSelect = (event: Event) => {
 /**
  * @todo 取りうる年の最小値の1月にクリックしたときに、取りうる年の最大値の12月に移動する処理
  */
+const JANUARY_INDEX = 0;
+const DECEMBER_INDEX = 11;
+const DECEMBER_MONTH = 12;
+const JANUARY_MONTH = 1;
+
 const onClickPrevMonthButton = () => {
-  if (calendarDate.value.getFullYear() === minYear && calendarDate.value.getMonth() === 0) {
+  if (calendarDate.value.getFullYear() === minYear && calendarDate.value.getMonth() === JANUARY_INDEX) {
     calendarDate.value = updateYear(calendarDate.value, maxYear);
     focusedDate.value = updateYear(focusedDate.value, maxYear);
 
-    calendarDate.value = updateMonth(calendarDate.value, 12);
-    focusedDate.value = updateMonth(focusedDate.value, 12);
+    calendarDate.value = updateMonth(calendarDate.value, DECEMBER_MONTH);
+    focusedDate.value = updateMonth(focusedDate.value, DECEMBER_MONTH);
   } else {
-    calendarDate.value = subtractMonth(calendarDate.value, 1);
-    focusedDate.value = subtractMonth(focusedDate.value, 1);
+    calendarDate.value = subtractMonth(calendarDate.value, JANUARY_MONTH);
+    focusedDate.value = subtractMonth(focusedDate.value, JANUARY_MONTH);
   }
 };
 
@@ -39,15 +44,15 @@ const onClickPrevMonthButton = () => {
  * @todo 取りうる年の最大値の12月にクリックしたときに、取りうる年の最小値の1月に移動する処理
  */
 const onClickNextMonthButton = () => {
-  if (calendarDate.value.getFullYear() === maxYear && calendarDate.value.getMonth() === 11) {
+  if (calendarDate.value.getFullYear() === maxYear && calendarDate.value.getMonth() === DECEMBER_INDEX) {
     calendarDate.value = updateYear(calendarDate.value, minYear);
     focusedDate.value = updateYear(focusedDate.value, minYear);
 
-    calendarDate.value = updateMonth(calendarDate.value, 1);
-    focusedDate.value = updateMonth(focusedDate.value, 1);
+    calendarDate.value = updateMonth(calendarDate.value, JANUARY_MONTH);
+    focusedDate.value = updateMonth(focusedDate.value, JANUARY_MONTH);
   } else {
-    calendarDate.value = addMonth(calendarDate.value, 1);
-    focusedDate.value = addMonth(focusedDate.value, 1);
+    calendarDate.value = addMonth(calendarDate.value, JANUARY_MONTH);
+    focusedDate.value = addMonth(focusedDate.value, JANUARY_MONTH);
   }
 };
 </script>
@@ -81,6 +86,7 @@ const onClickNextMonthButton = () => {
       >
         <option
           v-for="yearOption of yearOptions"
+          :key="yearOption.getFullYear()"
           :value="yearOption.getFullYear()"
           :selected="calendarDate.getFullYear() === yearOption.getFullYear()"
         >

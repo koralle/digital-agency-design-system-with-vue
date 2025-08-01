@@ -1,13 +1,19 @@
 import { ref, type Ref } from 'vue';
 import { getTodayDate } from './calendar-utils';
 
-export interface UseCalendarProps {
+interface UseCalendarProps {
   controlledDate: Ref<Date | null | undefined>;
   minYear: number;
   maxYear: number;
 }
 
-export const useCalendar = ({ controlledDate, minYear, maxYear }: UseCalendarProps) => {
+const useCalendar = ({ controlledDate, minYear, maxYear }: UseCalendarProps): {
+  calendarDate: Ref<Date>;
+  controlledDate: Ref<Date | null | undefined>;
+  focusedDate: Ref<Date>;
+  minYear: number;
+  maxYear: number;
+} => {
   const today = getTodayDate();
 
   const calendarDate = ref<Date>(today);
@@ -23,4 +29,6 @@ export const useCalendar = ({ controlledDate, minYear, maxYear }: UseCalendarPro
   };
 };
 
-export type UseCalendarReturn = ReturnType<typeof useCalendar>;
+type UseCalendarReturn = ReturnType<typeof useCalendar>;
+
+export { useCalendar, type UseCalendarProps, type UseCalendarReturn };

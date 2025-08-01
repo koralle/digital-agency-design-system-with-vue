@@ -29,28 +29,31 @@ const handleClick = () => {
   focusedDate.value = date;
 };
 
+const ONE_WEEK = 1;
+const ONE_DAY = 1;
+
 const handleKeydown = (event: KeyboardEvent) => {
   const key = event.key;
 
   switch (key) {
     case 'ArrowUp':
-      calendarDate.value = subtractWeek(date, 1);
-      focusedDate.value = subtractWeek(date, 1);
+      calendarDate.value = subtractWeek(date, ONE_WEEK);
+      focusedDate.value = subtractWeek(date, ONE_WEEK);
       emit('focus-next', focusedDate.value);
       break;
     case 'ArrowDown':
-      calendarDate.value = addWeek(date, 1);
-      focusedDate.value = addWeek(date, 1);
+      calendarDate.value = addWeek(date, ONE_WEEK);
+      focusedDate.value = addWeek(date, ONE_WEEK);
       emit('focus-next', focusedDate.value);
       break;
     case 'ArrowLeft':
-      calendarDate.value = subtractDay(date, 1);
-      focusedDate.value = subtractDay(date, 1);
+      calendarDate.value = subtractDay(date, ONE_DAY);
+      focusedDate.value = subtractDay(date, ONE_DAY);
       emit('focus-next', focusedDate.value);
       break;
     case 'ArrowRight':
-      calendarDate.value = addDay(date, 1);
-      focusedDate.value = addDay(date, 1);
+      calendarDate.value = addDay(date, ONE_DAY);
+      focusedDate.value = addDay(date, ONE_DAY);
       emit('focus-next', focusedDate.value);
       break;
     default:
@@ -70,8 +73,8 @@ defineExpose({ buttonRef });
     :class="['grid place-items-center', 'w-[calc(48/16*1rem)] h-[calc(48/16*1rem)]']"
   >
     <button
-      :ref="buttonRefKey"
       v-if="isVisible"
+      :ref="buttonRefKey"
       :class="[
         'grid place-items-center',
         'w-full h-full',

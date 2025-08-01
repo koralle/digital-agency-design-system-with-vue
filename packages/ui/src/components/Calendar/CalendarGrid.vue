@@ -18,6 +18,7 @@ const days = computed(() => getMonthDays(calendarDate.value));
       <tr :class="['grid grid-cols-[repeat(7,calc(48/16*1rem))]', '!h-[calc(48/16*1rem)]']">
         <th
           v-for="day of getWeekdays()"
+          :key="day"
           :class="[
             'grid place-items-center',
             'text-[1rem]',
@@ -33,10 +34,12 @@ const days = computed(() => getMonthDays(calendarDate.value));
     <tbody>
       <tr
         v-for="(cells, rowIndex) of days"
+        :key="rowIndex"
         :class="['grid grid-cols-[repeat(7,calc(48/16*1rem))]', '!h-[calc(48/16*1rem)]']"
       >
         <CalendarCell
           v-for="(cell, colIndex) of cells"
+          :key="`${rowIndex}-${colIndex}`"
           :date="cell"
           @focus-next="(date) => console.log(date)"
         />
