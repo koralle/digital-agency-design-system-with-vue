@@ -2,13 +2,20 @@
 interface CalendarCellProps {
   date: Date;
 }
+
+interface CalendarCellEmits {
+  'focus-next': [date: Date];
+}
 </script>
 
 <script setup lang="ts">
-import { computed, ref, watchEffect } from 'vue';
+import { computed, useTemplateRef } from 'vue';
 import { useCalendarContext } from './calendar-context';
 import { addDay, addWeek, isSameDate, isSameMonth, subtractDay, subtractWeek } from './calendar-utils';
+
 const { date } = defineProps<CalendarCellProps>();
+
+const emit = defineEmits<CalendarCellEmits>();
 
 const { calendarDate, controlledDate, focusedDate } = useCalendarContext();
 
@@ -29,35 +36,32 @@ const handleKeydown = (event: KeyboardEvent) => {
     case 'ArrowUp':
       calendarDate.value = subtractWeek(date, 1);
       focusedDate.value = subtractWeek(date, 1);
+      emit('focus-next', focusedDate.value);
       break;
     case 'ArrowDown':
       calendarDate.value = addWeek(date, 1);
       focusedDate.value = addWeek(date, 1);
+      emit('focus-next', focusedDate.value);
       break;
     case 'ArrowLeft':
       calendarDate.value = subtractDay(date, 1);
       focusedDate.value = subtractDay(date, 1);
+      emit('focus-next', focusedDate.value);
       break;
     case 'ArrowRight':
       calendarDate.value = addDay(date, 1);
       focusedDate.value = addDay(date, 1);
+      emit('focus-next', focusedDate.value);
       break;
     default:
       break;
   }
 };
 
-const buttonRef = ref<HTMLButtonElement | null>(null);
+const buttonRefKey = Symbol().toString();
+const buttonRef = useTemplateRef<HTMLButtonElement | null>(buttonRefKey);
 
-watchEffect(() => {
-  if (buttonRef.value === null) {
-    return;
-  }
-
-  if (isSameDate(date, focusedDate.value)) {
-    buttonRef.value.focus();
-  }
-});
+defineExpose({ buttonRef });
 </script>
 
 <template>
@@ -66,7 +70,7 @@ watchEffect(() => {
     :class="['grid place-items-center', 'w-[calc(48/16*1rem)] h-[calc(48/16*1rem)]']"
   >
     <button
-      ref="buttonRef"
+      :ref="buttonRefKey"
       v-if="isVisible"
       :class="[
         'grid place-items-center',
