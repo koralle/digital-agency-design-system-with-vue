@@ -1,43 +1,40 @@
 <script setup lang="ts">
-import { computed, nextTick, ref, useTemplateRef, watchEffect } from 'vue';
-import type { ShallowRef } from 'vue';
+import { computed, nextTick, ref } from 'vue';
 import { useCalendarContext } from './calendar-context';
 import { getMonthDays, getWeekdays, isSameMonth } from './calendar-utils';
 import CalendarCell from './CalendarCell.vue';
 
-const { calendarDate } = useCalendarContext();
+const { calendarDate, focusedDate } = useCalendarContext();
 
 const days = computed(() => getMonthDays(calendarDate.value));
 
 const buildRefKey = (date: Date): `${number}-${number}-${number}` =>
   `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 
-const daysMap = ref(new Map<string, Readonly<ShallowRef<typeof CalendarCell | null>>>());
+// CalendarCellのインスタンスを格納するMap
+const cellRefs = ref(new Map<string, Element | InstanceType<typeof CalendarCell> | null>());
 
-watchEffect(() => {
-  for (const date of days.value.flat().filter((date) => isSameMonth(date, calendarDate.value))) {
-    const calendarCellRefKey = buildRefKey(date);
-    const calendarRefCellRef = useTemplateRef<typeof CalendarCell | null>(calendarCellRefKey);
+// テンプレート参照を設定する関数
+const setCalendarCellRef = (date: Date) => {
+  return (el: Element | InstanceType<typeof CalendarCell> | null) => {
+    const key = buildRefKey(date);
+    if (el === null) {
+      return;
+    }
 
-    daysMap.value.set(calendarCellRefKey, calendarRefCellRef);
-  }
-});
+    const calendarCell = el as InstanceType<typeof CalendarCell>;
+    if (calendarCell.buttonRef !== null) {
+      cellRefs.value.set(key, calendarCell);
+    }
+  };
+};
 
 const handleFocusNext = async (date: Date) => {
-  if (!isSameMonth(date, calendarDate.value)) {
-    await nextTick();
-  }
-
+  await nextTick();
   const nextKey = buildRefKey(date);
-  const buttonRef = daysMap.value.get(nextKey);
+  const cellInstance = cellRefs.value.get(nextKey) as InstanceType<typeof CalendarCell>;
 
-  if (typeof buttonRef === 'undefined') {
-    return;
-  }
-
-  if (buttonRef.value === null) {
-    return;
-  }
+  cellInstance.buttonRef?.focus();
 };
 </script>
 
@@ -71,7 +68,7 @@ const handleFocusNext = async (date: Date) => {
       >
         <CalendarCell
           :data-date="buildRefKey(cell)"
-          :ref="buildRefKey(cell)"
+          :ref="(el) => setCalendarCellRef(cell)(el)"
           v-for="(cell, colIndex) of cells"
           :key="`${rowIndex}-${colIndex}`"
           :date="cell"
