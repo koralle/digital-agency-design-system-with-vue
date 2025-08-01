@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed, nextTick, ref } from 'vue';
+import { computed, nextTick, ref, watchEffect, type ComponentPublicInstance } from 'vue';
 import { useCalendarContext } from './calendar-context';
-import { getMonthDays, getWeekdays } from './calendar-utils';
+import { getMonthDays, getWeekdays, isSameMonth } from './calendar-utils';
 import CalendarCell from './CalendarCell.vue';
 import { dateIntlFormatter } from './intl';
 
@@ -11,12 +11,28 @@ const days = computed(() => getMonthDays(calendarDate.value));
 
 const buildRefKey = (date: Date) => dateIntlFormatter.format(date);
 
-// CalendarCellのインスタンスを格納するMap
 const cellRefs = ref(new Map<string, Element | InstanceType<typeof CalendarCell> | null>());
+
+watchEffect(() => {
+  const currentDays = getMonthDays(calendarDate.value)
+    .flat()
+    .filter((date) => isSameMonth(date, calendarDate.value));
+  const currentDayKeys = new Set<string>();
+
+  for (const day of currentDays) {
+    currentDayKeys.add(buildRefKey(day));
+  }
+
+  for (const key of Array.from(cellRefs.value.keys())) {
+    if (!currentDayKeys.has(key)) {
+      cellRefs.value.delete(key);
+    }
+  }
+});
 
 // テンプレート参照を設定する関数
 const setCalendarCellRef = (date: Date) => {
-  return (el: Element | InstanceType<typeof CalendarCell> | null) => {
+  return (el: Element | ComponentPublicInstance<typeof CalendarCell> | null) => {
     const key = buildRefKey(date);
     if (el === null) {
       return;
